@@ -1,0 +1,65 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+
+	
+{% block page_title %}Ajouter encaissement{% endblock page_title %}
+
+
+
+{% block body %}
+   {% for message in messages %}
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %} 
+            <div class="alert alert-success" role="alert">{{message}}</div>
+        {% else %}
+            <div class="alert alert-danger" role="alert">{{message}}</div>
+            
+        {% endif %}
+    {% endfor %}
+
+   <div class="panel panel-white col-md-12">
+		
+	    <form method="post"  >{% csrf_token %}
+			
+
+			<div class="row ">
+				<div class="form-group col-md-12 ">
+					<label class="">Vente</label>
+					{{form.vente}}	
+					
+					{% if form.errors.vente %}
+					    <label class="error">{{form.errors.vente}}</label>				
+					{% endif %}
+				</div>
+				
+			</div>
+			<div class="row ">
+				<div class="form-group col-md-12 ">
+					<label class="">Client</label>
+					{{form.client}}	
+					
+					{% if form.errors.client %}
+					    <label class="error">{{form.errors.client}}</label>				
+					{% endif %}
+				</div>
+			</div>
+
+			<div class="row ">
+				<div class="form-group col-md-12 ">
+					<label class="">Montant</label>
+					{{form.montant}}	
+					
+					{% if form.errors.montant %}
+					    <label class="error">{{form.errors.montant}}</label>				
+					{% endif %}
+				</div>
+			</div>
+
+			
+
+				
+			<button type="submit" class="btn btn-primary"><b>AJOUTER</b></button>
+		</form>
+	</div>
+	
+{% endblock body %}

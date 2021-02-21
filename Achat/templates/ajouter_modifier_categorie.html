@@ -1,0 +1,51 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+
+	
+{% block page_title %}{% if request.resolver_match.url_name == "ajouter_categorie" %}Ajouter Categorie{% else %}Modifier Categorie{% endif %}{% endblock page_title %}
+
+
+
+{% block body %}
+   
+
+   <div class="panel panel-white col-md-12">
+		
+	    <form method="post"  >{% csrf_token %}
+			
+
+			<div class="row ">
+				<div class="form-group col-md-12 ">
+					<label class="">Designation</label>
+					{{form.designation}}	
+					
+					{% if form.errors.designation %}
+					    <label class="error">{{form.errors.designation}}</label>				
+					{% endif %}
+				</div>
+				
+			</div>
+			<div class="row ">
+				<div class="form-group col-md-12 ">
+					<label class="">Description</label>
+					{{form.description}}	
+					
+					{% if form.errors.description %}
+					    <label class="error">{{form.errors.description}}</label>				
+					{% endif %}
+				</div>
+			</div>
+
+			
+
+				
+	{% if request.resolver_match.url_name == "ajouter_categorie" %}
+			<button type="submit" class="btn btn-primary"><b>AJOUTER</b></button>
+	{% else %}
+			<button type="submit" class="btn btn-primary"><b>MODIFIER</b></button>
+	{% endif %}
+		</form>
+	</div>
+	
+{% endblock body %}

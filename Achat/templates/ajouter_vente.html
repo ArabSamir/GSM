@@ -1,0 +1,269 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+
+	
+{% block page_title %}Ajouter encaissement{% endblock page_title %}
+
+{% block link %}
+    
+        <link href="{% static 'assets/css/space.min.css' %}" rel="stylesheet">
+        <link href="{% static 'assets/css/themes/admin2.css' %}" rel="stylesheet">
+        <link href="{% static 'assets/css/custom.css' %}" rel="stylesheet">
+{% endblock link %}
+
+{% block body %}
+   	{% for message in messages %}
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %} 
+            <div class="alert alert-success" role="alert">{{message}}</div>
+        {% else %}
+            <div class="alert alert-danger" role="alert">{{message}}</div>
+            
+        {% endif %}
+    {% endfor %}
+
+		
+	    <form method="post" name="mouton_form" >{% csrf_token %}
+			
+
+			   <div class="panel panel-white col-md-12">
+			   		<div class="panel-heading clearfix">
+						<h4 class="panel-title">Client</h4>
+					</div>
+					<button type="button" class="btn btn-info m-b-sm" data-toggle="modal" data-target="#clientModal">Ajouter nouveau client</button>
+					<div class="row ">
+						<div class="form-group col-md-12 ">
+							<label class="">Client</label>
+							{{vente_form.client}}	
+							
+							{% if vente_form.errors.client %}
+							    <label class="error">{{vente_form.errors.client}}</label>				
+							{% endif %}
+						</div>
+						
+					</div>
+
+				</div>
+
+				<div class="panel panel-white col-md-12" id="items">
+					<div class="panel-heading clearfix">
+						<h4 class="panel-title">Mouton</h4>
+					</div>
+					<button type="button" class="btn btn-info m-b-sm" data-toggle="modal" data-target="#moutonModal">Ajouter nouveau mouton</button>
+					<button type="button" class="btn btn-success m-b-sm" onclick="duplicate_lignevente()">Ajouter une nouvelle ligne</button>
+					<div class="row " id="LingeVente">
+
+						<div class="form-group col-md-5 ">
+							<label class="">Mouton</label>
+							{{lignevente_form.mouton}}	
+							
+							{% if lignevente_form.errors.mouton %}
+							    <label class="error">{{lignevente_form.errors.mouton}}</label>				
+							{% endif %}
+						</div>
+
+						<div class="form-group col-md-5 ">
+							<label class="">Prix</label>
+							<div class="form-inline">
+								{{lignevente_form.mt_vente}}
+								
+							</div>
+
+							{% if lignevente_form.errors.mt_vente %}
+							    <label class="error">{{lignevente_form.errors.mt_vente}}</label>				
+							{% endif %}
+						</div>
+					
+					</div>
+
+				</div>
+			
+
+			<input type="submit" value="Ajouter" class="btn btn-primary" name="vente_form" >
+				
+	
+		</form>
+	
+
+	 <div class="panel-body">
+                                    
+                                    <!-- client Modal -->
+                                    <form id="add-row-form"   method="POST"> {% csrf_token %}
+                                    <div class="modal fade" id="clientModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <h4 class="modal-title" id="myModalLabel">Ajouter Client</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row ">
+														<div class="form-group col-md-12 ">
+															<label class="">Nom</label>
+															{{client_form.nom}}	
+															
+															{% if client_form.errors.nom %}
+															    <label class="error">{{client_form.errors.nom}}</label>				
+															{% endif %}
+														</div>
+														
+													</div>
+													<div class="row ">
+														<div class="form-group col-md-12 ">
+															<label class="">Prenom</label>
+															{{client_form.prenom}}	
+															
+															{% if client_form.errors.prenom %}
+															    <label class="error">{{client_form.errors.prenom}}</label>				
+															{% endif %}
+														</div>
+													</div>
+
+													<div class="row ">
+														<div class="form-group col-md-12 ">
+															<label class="">Adresse</label>
+															{{client_form.adresse}}	
+															
+															{% if client_form.errors.adresse %}
+															    <label class="error">{{client_form.errors.adresse}}</label>				
+															{% endif %}
+														</div>
+													</div>
+
+													<div class="row ">
+														<div class="form-group col-md-12 ">
+															<label class="">Telephone</label>
+															{{client_form.tel}}	
+															
+															{% if client_form.errors.tel %}
+															    <label class="error">{{client_form.errors.tel}}</label>				
+															{% endif %}
+														</div>
+													</div>
+
+													<div class="row ">
+														<div class="form-group col-md-12 ">
+															<label class="">Email</label>
+															{{client_form.email}}	
+															
+															{% if client_form.errors.email %}
+															    <label class="error">{{client_form.errors.email}}</label>				
+															{% endif %}
+														</div>
+													</div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                                    <input type="submit" id="add-row" value="Ajouter" class="btn btn-primary" name="client_form">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </form>
+                                    
+                                </div>
+
+
+
+	 <div class="panel-body">
+                                    
+        <!-- Mouton Modal -->
+        <form id="add-row-form"   method="POST" enctype="multipart/form-data"> {% csrf_token %}
+        <div class="modal fade" id="moutonModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Ajouter Mouton</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row ">
+							<div class="form-group col-md-12 ">
+								<label class="">Categorie</label>
+								{{mouton_form.categorie}}	
+								
+								{% if mouton_form.errors.categorie %}
+								    <label class="error">{{mouton_form.errors.categorie}}</label>				
+								{% endif %}
+							</div>
+							
+						</div>
+						<div class="row ">
+							<div class="form-group col-md-12 ">
+								<label class="">Groupe</label>
+								{{mouton_form.groupe}}	
+								
+								{% if mouton_form.errors.groupe %}
+								    <label class="error">{{mouton_form.errors.groupe}}</label>				
+								{% endif %}
+							</div>
+						</div>
+						<div class="row ">
+							<div class="form-group col-md-12 ">
+								<label class="">Couleur</label>
+								{{mouton_form.couleur}}	
+								
+								{% if mouton_form.errors.couleur %}
+								    <label class="error">{{mouton_form.errors.couleur}}</label>				
+								{% endif %}
+							</div>
+						</div>
+
+						<div class="row ">
+							<div class="form-group col-md-12 ">
+								<label class="">Photo</label>
+								{{mouton_form.photo}}	
+								
+								{% if mouton_form.errors.photo %}
+								    <label class="error">{{mouton_form.errors.photo}}</label>				
+								{% endif %}
+							</div>
+						</div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <input type="submit" id="add-row" value="Ajouter" class="btn btn-primary" name="mouton_form">
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
+        
+    </div>
+{% endblock body %}
+
+{% block script %}
+
+    <script type="text/javascript">
+    	var counter = 0;
+    	function duplicate_lignevente() {
+    		counter++;
+    		var name = "lignevente"+ counter;
+	    	var def_name = "remove_lignevente('"+ name+"')";
+	    	
+	    	var vingevente_div = document.getElementById('LingeVente');
+	    	var cln = vingevente_div.cloneNode(true);
+	    	cln.setAttribute('id',name);
+	    	document.getElementById('items').appendChild(cln);
+
+	    	var button = document.createElement('button');
+	    	var i = document.createElement('i');
+	    	i.setAttribute('class', 'fa fa-close')
+	    	button.setAttribute("class", "btn btn-danger");
+	    	button.setAttribute("type", "button");
+	    	button.setAttribute("type", "button");
+	    	button.setAttribute("onclick", def_name);
+	    	button.appendChild(i);
+	    	
+	    	var inline_form = document.getElementsByClassName('form-inline');
+	    	var last = inline_form[inline_form.length-1];
+	    	last.appendChild(button);
+    	}
+    	
+    	function remove_lignevente(name){
+    		var lignevente = document.getElementById(name);
+    		lignevente.remove();
+    	}
+    </script>
+
+{% endblock script %}

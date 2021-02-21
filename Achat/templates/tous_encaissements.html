@@ -1,0 +1,66 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block page_name %}Tous les Encaissements{% endblock page_name %}
+{% block link %}
+    
+        <link href="{% static 'assets/plugins/datatables/css/jquery.datatables.min.css' %}" rel="stylesheet" type="text/css"/>	
+        <link href="{% static 'assets/plugins/datatables/css/jquery.datatables_themeroller.css' %}" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css'%}">
+{% endblock link %}
+{% block page_title %}Encaissement{% endblock page_title %}
+{% block body %}
+    {% for message in messages %}
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %} 
+            <div class="alert alert-success" role="alert">{{message}}</div>
+        {% else %}
+            <div class="alert alert-danger" role="alert">{{message}}</div>
+            
+        {% endif %}
+    {% endfor %}
+    
+    <div class="panel panel-white">
+        <div class="panel-heading clearfix">
+            <h4 class="panel-title">Tous les encaissements:</h4>
+        </div>
+        <div class="panel-body">
+            <a href="{% url 'ajouter_encaissement' %}"  class="btn btn-success m-b-sm">Ajouter encaissement</a>
+           <div class="table-responsive">
+            <table id="example" class="display table" style="width: 100%; cellspacing: 0;">
+                <thead>
+                    <tr>
+                        <th>Num Encaissement</th>
+                        <th>Vente</th>
+                        <th>Client</th>
+                        <th>Montant</th>
+                        <th>Date Encaissement</th>
+                        <th>Etat Encaissement</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for encaissement in encaissements %}
+                    	
+                    <tr>
+                        <td>{{encaissement.pk}}</td>
+                        <td>{{encaissement.vente}}</td>
+                        <td>{{encaissement.client}}</td>
+                        <td>{{encaissement.montant}}</td>
+                        <td>{{encaissement.date_enc|date:"d/m/Y"}}</td>
+                        <td>{{encaissement.etat_enc}}</td>
+                        <td>
+                            <a href="{% url 'annuler_encaissement' pk=encaissement.pk %}" title="Annuler encaissement" ><i class="fa fa-trash icon_delete"></i></a></td>
+                    </tr>
+    			    {% endfor %}
+                </tbody>
+               </table>  
+            </div>
+        </div>
+    </div>
+{% endblock body %}
+
+{% block script %}
+        <script src="{% static 'assets/plugins/datatables/js/jquery.datatables.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js' %}"></script>
+        <script src="{% static 'assets/js/pages/table-data.js' %}"></script>
+{% endblock script %}

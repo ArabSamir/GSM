@@ -1,0 +1,72 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+
+	
+{% block page_title %}{% if request.resolver_match.url_name == "ajouter_mouton" %}Ajouter mouton{% else %}Modifier mouton{% endif %}{% endblock page_title %}
+
+
+
+{% block body %}
+   
+
+   <div class="panel panel-white col-md-12">
+		
+	    <form method="post"   enctype="multipart/form-data">{% csrf_token %}
+			
+
+			<div class="row ">
+				<div class="form-group col-md-12 ">
+					<label class="">Categorie</label>
+					{{form.categorie}}	
+					
+					{% if form.errors.categorie %}
+					    <label class="error">{{form.errors.categorie}}</label>				
+					{% endif %}
+				</div>
+				
+			</div>
+			<div class="row ">
+				<div class="form-group col-md-12 ">
+					<label class="">Groupe</label>
+					{{form.groupe}}	
+					
+					{% if form.errors.groupe %}
+					    <label class="error">{{form.errors.groupe}}</label>				
+					{% endif %}
+				</div>
+			</div>
+			<div class="row ">
+				<div class="form-group col-md-12 ">
+					<label class="">Couleur</label>
+					{{form.couleur}}	
+					
+					{% if form.errors.couleur %}
+					    <label class="error">{{form.errors.couleur}}</label>				
+					{% endif %}
+				</div>
+			</div>
+
+			<div class="row ">
+				<div class="form-group col-md-12 ">
+					<label class="">Photo</label>
+					{{form.photo}}	
+					
+					{% if form.errors.photo %}
+					    <label class="error">{{form.errors.photo}}</label>				
+					{% endif %}
+				</div>
+			</div>
+
+			
+
+				
+	{% if request.resolver_match.url_name == "ajouter_mouton" %}
+			<button type="submit" class="btn btn-primary"><b>AJOUTER</b></button>
+	{% else %}
+			<button type="submit" class="btn btn-primary"><b>MODIFIER</b></button>
+	{% endif %}
+		</form>
+	</div>
+	
+{% endblock body %}

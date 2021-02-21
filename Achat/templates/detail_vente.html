@@ -1,0 +1,187 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+
+{% block page_title %}
+    Detail Vente
+{% endblock page_title %}
+
+{% block body %}
+<div class="row">
+	
+	<div class="col-md-6">
+        <div class="panel panel-white">
+            <div class="panel-heading clearfix">
+                <h4 class="panel-title">Vente :</h4>
+            </div>
+            <div class="panel-body">
+                <form class="form-horizontal">
+				  <div class="form-group">
+				    <label for="inputEmail3" class="col-sm-3 control-label"><b>Num Vente :</b></label>
+				    <div class="col-sm-9">
+				      <input type="text" class="form-control" id="input-readonly" value="{{vente.pk}}" readonly="">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="inputEmail3" class="col-sm-3 control-label"><b>Date Vente :</b></label>
+				    <div class="col-sm-9">
+				      <input type="text" class="form-control" id="input-readonly" value="{{vente.date_vente|date:'d/m/Y'}}" readonly="">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="inputEmail3" class="col-sm-3 control-label"><b>Quantité :</b></label>
+				    <div class="col-sm-9">
+				      <input type="text" class="form-control" id="input-readonly" value="{{vente.nb_mouton_vendu}}" readonly="">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="inputEmail3" class="col-sm-3 control-label"><b>Prix Totale :</b></label>
+				    <div class="col-sm-9">
+				      <input type="text" class="form-control" id="input-readonly" value="{{vente.prix_vente_totale}} DA" readonly="">
+				    </div>
+				  </div>
+			  
+			  
+			</form>
+            </div>
+        </div>
+    </div>
+	  
+	<div class="col-md-6">
+        <div class="panel panel-white">
+            <div class="panel-heading clearfix">
+                <h4 class="panel-title">Client :</h4>
+            </div>
+            <div class="panel-body">
+                <form class="form-horizontal">
+				  <div class="form-group">
+				    <label for="inputEmail3" class="col-sm-3 control-label"><b>Nom :</b></label>
+				    <div class="col-sm-9">
+				      <input type="text" class="form-control" id="input-readonly" value="{{vente.client.nom}}" readonly="">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="inputEmail3" class="col-sm-3 control-label"><b>Prénom :</b></label>
+				    <div class="col-sm-9">
+				      <input type="text" class="form-control" id="input-readonly" value="{{vente.client.prenom}}" readonly="">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="inputEmail3" class="col-sm-3 control-label"><b>Adresse :</b></label>
+				    <div class="col-sm-9">
+				      <input type="text" class="form-control" id="input-readonly" value="{{vente.client.adresse}}" readonly="">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="inputEmail3" class="col-sm-3 control-label"><b>Téléphone :</b></label>
+				    <div class="col-sm-9">
+				      <input type="text" class="form-control" id="input-readonly" value="{{vente.client.tel}}" readonly="">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="inputEmail3" class="col-sm-3 control-label"><b>E-mail :</b></label>
+				    <div class="col-sm-9">
+				      <input type="text" class="form-control" id="input-readonly" value="{{vente.client.email}}" readonly="">
+				    </div>
+				  </div>
+			  
+			  
+			</form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+	<div class="col-md-6">
+		<div class="panel panel-white">
+            <div class="panel-heading clearfix">
+                <h4 class="panel-title">Detail Vente:</h4>
+            </div>
+            <div class="panel-body">
+               <div class="table-responsive">
+                <table id="example" class="display table" style="width: 100%; cellspacing: 0;">
+                    <thead>
+                        <tr>
+                            <th>Num Mouton</th>
+                            <th>Photo</th>
+                            <th>Prix Vente</th>
+                            <!-- <th>Action</th> -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for lignevente in ligneventes %}
+                        	
+                            <tr>
+                                <td>{{lignevente.mouton.pk }}</td>
+                                <td><a href="{{lignevente.mouton.photo.url}}"><img src="{{lignevente.mouton.photo.url}}" width="50" height="50"></a></td>
+                                <td>{{lignevente.mt_vente}} DA</td>
+                                <!-- <td>
+                                    <a href="#" class="icon_edit mr-6 ml-6"><i class="fa fa-search-plus"></i></a>
+                                    <a href="#" class="icon_delete"><i class="fa fa-trash"></i></a>
+                                </td> -->
+                            </tr>
+					    {% endfor %}
+                    </tbody>
+                   </table>  
+                </div>
+            </div>
+        </div>
+    </div>
+	
+
+    <div class="col-md-6">
+ 
+				 
+		{% if encaissements %}
+				<div class="panel panel-white">
+
+		            <div class="panel-heading clearfix">
+		                <h4 class="panel-title">Encaissements :</h4>
+		            </div>
+		            <div class="panel-body">
+		               <div class="table-responsive">
+		                <table id="example" class="display table" style="width: 100%; cellspacing: 0;">
+		                    <thead>
+		                        <tr>
+		                            <th>Num Encaissement</th>
+		                            <th>Montant</th>
+		                            <th>Date Encaissement</th>
+		                            <th>Etat Encaissement</th>
+		                            <!-- <th>Action</th> -->
+		                        </tr>
+		                    </thead>
+		                    <tbody>
+		                        {% for encaissement in encaissements %}
+		                        	
+		                            <tr>
+		                                <td>{{encaissement.pk }}</td>
+		                                <td>{{encaissement.montant}} DA</td>
+		                                <td>{{encaissement.date_enc|date:"d/m/Y"}} DA</td>
+		                                <td>{{encaissement.etat_enc}}</td>
+		                                <!-- <td>
+		                                    <a href="#" class="icon_edit mr-6 ml-6"><i class="fa fa-search-plus"></i></a>
+		                                    <a href="#" class="icon_delete"><i class="fa fa-trash"></i></a>
+		                                </td> -->
+		                            </tr>
+							    {% endfor %}
+		                    </tbody>
+		                   </table>  
+		                </div>
+		            </div>
+		        </div>
+
+	                    
+	    {% else %}
+				<div class="panel panel-white">
+	    			<p>Aucun encaissement n'a été effectué</p>        	           
+		        </div>
+	    {% endif %}
+		 
+				  
+			  
+	</div>
+</div>
+
+  
+{% endblock body %}

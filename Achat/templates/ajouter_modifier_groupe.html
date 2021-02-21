@@ -1,0 +1,81 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+
+	
+{% block page_title %}{% if request.resolver_match.url_name == "ajouter_groupe" %}Ajouter groupe{% else %}Modifier groupe{% endif %}{% endblock page_title %}
+
+
+
+{% block body %}
+   
+
+   <div class="panel panel-white col-md-12">
+		
+	    <form method="POST"  >{% csrf_token %}
+			
+
+			<div class="row ">
+				<div class="form-group col-md-12 ">
+					<label class="">Designation</label>
+					{{form.designation}}	
+					
+					{% if form.errors.designation %}
+					    <label class="error">{{form.errors.designation}}</label>				
+					{% endif %}
+				</div>
+				
+			</div>
+			<div class="row ">
+				<div class="form-group col-md-12 ">
+					<label class="">Nombre de mouton</label>
+					{{form.nb_mouton_acheter}}	
+					
+					{% if form.errors.nb_mouton_acheter %}
+					    <label class="error">{{form.errors.nb_mouton_acheter}}</label>				
+					{% endif %}
+				</div>
+			</div>
+			<div class="row ">
+				<div class="form-group col-md-12 ">
+					<label class="">Prix Achat Unitaire</label>
+					{{form.prix_achat}}	
+					
+					{% if form.errors.prix_achat %}
+					    <label class="error">{{form.errors.prix_achat}}</label>				
+					{% endif %}
+				</div>
+			</div>
+			<div class="row ">
+				<div class="form-group col-md-12 ">
+					<label class="">Date Achat</label>
+					{{form.date_achat}}	
+					
+					{% if form.errors.date_achat %}
+					    <label class="error">{{form.errors.date_achat}}</label>				
+					{% endif %}
+				</div>
+			</div>
+			<div class="row ">
+				<div class="form-group col-md-12 ">
+					<label class="">Lieux Achat</label>
+					{{form.lieux_achat}}	
+					
+					{% if form.errors.lieux_achat %}
+					    <label class="error">{{form.errors.lieux_achat}}</label>				
+					{% endif %}
+				</div>
+			</div>
+
+			
+
+				
+	{% if request.resolver_match.url_name == "ajouter_groupe" %}
+			<button type="submit" class="btn btn-primary"><b>AJOUTER</b></button>
+	{% else %}
+			<button type="submit" class="btn btn-primary"><b>MODIFIER</b></button>
+	{% endif %}
+		</form>
+	</div>
+	
+{% endblock body %}

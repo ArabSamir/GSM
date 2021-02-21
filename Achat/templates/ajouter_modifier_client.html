@@ -1,0 +1,84 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+
+	
+{% block page_title %}{% if request.resolver_match.url_name == "ajouter_client" %}Ajouter client{% else %}Modifier client{% endif %}{% endblock page_title %}
+
+
+
+{% block body %}
+   
+
+   <div class="panel panel-white col-md-12">
+		
+	    <form method="post"  >{% csrf_token %}
+			
+
+			<div class="row ">
+				<div class="form-group col-md-12 ">
+					<label class="">Nom</label>
+					{{form.nom}}	
+					
+					{% if form.errors.nom %}
+					    <label class="error">{{form.errors.nom}}</label>				
+					{% endif %}
+				</div>
+				
+			</div>
+			<div class="row ">
+				<div class="form-group col-md-12 ">
+					<label class="">Prenom</label>
+					{{form.prenom}}	
+					
+					{% if form.errors.prenom %}
+					    <label class="error">{{form.errors.prenom}}</label>				
+					{% endif %}
+				</div>
+			</div>
+
+			<div class="row ">
+				<div class="form-group col-md-12 ">
+					<label class="">Adresse</label>
+					{{form.adresse}}	
+					
+					{% if form.errors.adresse %}
+					    <label class="error">{{form.errors.adresse}}</label>				
+					{% endif %}
+				</div>
+			</div>
+
+			<div class="row ">
+				<div class="form-group col-md-12 ">
+					<label class="">Telephone</label>
+					{{form.tel}}	
+					
+					{% if form.errors.tel %}
+					    <label class="error">{{form.errors.tel}}</label>				
+					{% endif %}
+				</div>
+			</div>
+
+			<div class="row ">
+				<div class="form-group col-md-12 ">
+					<label class="">Email</label>
+					{{form.email}}	
+					
+					{% if form.errors.email %}
+					    <label class="error">{{form.errors.email}}</label>				
+					{% endif %}
+				</div>
+			</div>
+
+			
+
+				
+	{% if request.resolver_match.url_name == "ajouter_client" %}
+			<button type="submit" class="btn btn-primary"><b>AJOUTER</b></button>
+	{% else %}
+			<button type="submit" class="btn btn-primary"><b>MODIFIER</b></button>
+	{% endif %}
+		</form>
+	</div>
+	
+{% endblock body %}
